@@ -18,9 +18,9 @@ defmodule NumbersRecTest do
     assert Numbers.fibonacci_rec(6) == 8
   end
 
-  test "Largest Common Divisor Recursive" do
-    assert Numbers.largest_common_divisor_rec(12, 8) == 4
-    assert Numbers.largest_common_divisor_rec(7, 5) == 1
+  test "Greatest Common Divisor Recursive" do
+    assert Numbers.greatest_common_divisor_rec(12, 8) == 4
+    assert Numbers.greatest_common_divisor_rec(7, 5) == 1
   end
 
   test "Least Common Multiple Recursive" do
