@@ -13,12 +13,12 @@ defmodule Numbers do
   def fibonacci_rec(1), do: 1
   def fibonacci_rec(n), do: fibonacci_rec(n - 1) + fibonacci_rec(n - 2)
 
-  def largest_common_divisor_rec(a, 0), do: a
-  def largest_common_divisor_rec(a, b), do: largest_common_divisor_rec(b, rem(a, b))
+  def greatest_common_divisor_rec(a, 0), do: a
+  def greatest_common_divisor_rec(a, b), do: greatest_common_divisor_rec(b, rem(a, b))
 
   def least_common_multiple_rec(a, b) do
-    quotient = largest_common_divisor_rec(a, b)
-    a * b / quotient
+    quotient = greatest_common_divisor_rec(a, b)
+    a * b |> div(quotient)
   end
 
   def sum_first_n_acc(n), do: _sum_first_n_help(n, 0)
@@ -33,11 +33,11 @@ defmodule Numbers do
   def _fibonacci_help(n, acc1, _) when n <= 0, do: acc1
   def _fibonacci_help(n, acc1, acc2), do: _fibonacci_help(n - 1, acc2, acc1 + acc2)
 
-  def largest_common_divisor_acc(a, 0), do: a
-  def largest_common_divisor_acc(a, b), do: largest_common_divisor_acc(b, rem(a, b))
+  def greatest_common_divisor_acc(a, 0), do: a
+  def greatest_common_divisor_acc(a, b), do: greatest_common_divisor_acc(b, rem(a, b))
 
   def least_common_multiple_acc(a, b) do
-    quotient = largest_common_divisor_acc(a, b)
-    a * b / quotient
+    quotient = greatest_common_divisor_acc(a, b)
+    a * b |> div(quotient)
   end
 end

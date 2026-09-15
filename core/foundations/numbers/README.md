@@ -11,7 +11,7 @@ Implementa 5 algoritmos fundamentales (suma de los primeros N naturales, factori
 | Archivo / Directorio | Propósito |
 |----------------------|-----------|
 | [`mix.exs`](mix.exs) | Manifiesto del proyecto Elixir (Mix). |
-| [`lib/numbers.ex`](lib/numbers.ex) | 15 funciones (3 enfoques × 5 algoritmos). |
+| [`lib/numbers.ex`](lib/numbers.ex) | 10 funciones (2 enfoques × 5 algoritmos). |
 | [`test/numbers_rec_test.exs`](test/numbers_rec_test.exs) | 5 tests para el enfoque recursivo directo. |
 | [`test/numbers_acc_test.exs`](test/numbers_acc_test.exs) | 5 tests para el enfoque con acumulador. |
 | [`test/test_helper.exs`](test/test_helper.exs) | Arranque de `ExUnit`. |
@@ -22,7 +22,7 @@ Implementa 5 algoritmos fundamentales (suma de los primeros N naturales, factori
 numbers/
 ├── mix.exs                       # Manifiesto del proyecto
 ├── lib/
-│   └── numbers.ex                # 15 funciones (3 enfoques × 5 algoritmos)
+│   └── numbers.ex                # 10 funciones (2 enfoques × 5 algoritmos)
 ├── test/
 │   ├── test_helper.exs           # Arranque de ExUnit
 │   ├── numbers_rec_test.exs      # 5 tests recursivos directos
@@ -36,7 +36,7 @@ numbers/
 
 **ES:** Este proyecto usa **Elixir** con **Mix** para construir y **ExUnit** como framework de tests.
 
-Cada algoritmo se implementa de tres formas distintas, aunque dos de ellas coinciden semánticamente:
+Cada algoritmo se implementa de dos formas distintas:
 
 1. **Recursivo Directo (`..._rec`)**: Basado en la definición matemática, con pattern matching y guards para los casos base.
 2. **Recursivo con Acumulador (`..._acc`)**: Expone una función limpia que delega en un helper privado (`_help`) con tail recursion.
@@ -80,9 +80,9 @@ end
 
 ### `lib/numbers.ex` — Implementación
 
-**ES:** Las 15 funciones usando pattern matching (múltiples cláusulas con guards y valores literales). Los helpers con acumulador usan tail recursion, que la BEAM optimiza como TCO.
+**ES:** Las 10 funciones usando pattern matching (múltiples cláusulas con guards y valores literales). Los helpers con acumulador usan tail recursion, que la BEAM optimiza como TCO. `least_common_multiple` usa `div` para división entera.
 
-**EN:** The 15 functions using pattern matching (multiple clauses with guards and literal values). Accumulator helpers use tail recursion, which the BEAM optimizes as TCO.
+**EN:** The 10 functions using pattern matching (multiple clauses with guards and literal values). Accumulator helpers use tail recursion, which the BEAM optimizes as TCO. `least_common_multiple` uses `div` for integer division.
 
 ```elixir
 defmodule Numbers do
@@ -97,8 +97,8 @@ defmodule Numbers do
   def _fibonacci_help(n, acc1, acc2), do: _fibonacci_help(n - 1, acc2, acc1 + acc2)
 
   # Pattern matching directo en argumentos
-  def largest_common_divisor_rec(a, 0), do: a
-  def largest_common_divisor_rec(a, b), do: largest_common_divisor_rec(b, rem(a, b))
+  def greatest_common_divisor_rec(a, 0), do: a
+  def greatest_common_divisor_rec(a, b), do: greatest_common_divisor_rec(b, rem(a, b))
 end
 ```
 
@@ -157,7 +157,7 @@ Finished in 0.03 seconds (0.00s async, 0.03s sync)
 | `sum_first_n` | `(0) = 0`, `(3) = 6` | ✅ | ✅ |
 | `factorial` | `(0) = 1`, `(4) = 24` | ✅ | ✅ |
 | `fibonacci` | `(0) = 0`, `(1) = 1`, `(6) = 8` | ✅ | ✅ |
-| `largest_common_divisor` | `(12, 8) = 4`, `(7, 5) = 1` | ✅ | ✅ |
+| `greatest_common_divisor` | `(12, 8) = 4`, `(7, 5) = 1` | ✅ | ✅ |
 | `least_common_multiple` | `(8, 6) = 24`, `(6, 4) = 12` | ✅ | ✅ |
 
 ---

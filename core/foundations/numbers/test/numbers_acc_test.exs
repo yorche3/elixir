@@ -18,9 +18,9 @@ defmodule NumbersAccTest do
     assert Numbers.fibonacci_acc(6) == 8
   end
 
-  test "Largest Common Divisor Accumulator" do
-    assert Numbers.largest_common_divisor_acc(12, 8) == 4
-    assert Numbers.largest_common_divisor_acc(7, 5) == 1
+  test "Greatest Common Divisor Accumulator" do
+    assert Numbers.greatest_common_divisor_acc(12, 8) == 4
+    assert Numbers.greatest_common_divisor_acc(7, 5) == 1
   end
 
   test "Least Common Multiple Accumulator" do
