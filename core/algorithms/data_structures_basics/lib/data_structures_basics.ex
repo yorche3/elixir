@@ -86,7 +86,9 @@ defmodule DataStructuresBasics do
 
     defp append_cell(nil, new_cell), do: new_cell
     defp append_cell(%Cell{next: nil} = cell, new_cell), do: Cell.put_next(cell, new_cell)
-    defp append_cell(%Cell{next: next} = cell, new_cell), do: Cell.put_next(cell, append_cell(next, new_cell))
+
+    defp append_cell(%Cell{next: next} = cell, new_cell),
+      do: Cell.put_next(cell, append_cell(next, new_cell))
 
     @spec delete(list :: t, value :: integer) :: {boolean, t}
     def delete(%__MODULE__{} = list, value) do
@@ -97,8 +99,10 @@ defmodule DataStructuresBasics do
     end
 
     defp remove_cell(nil, _value), do: {0, nil}
+
     defp remove_cell(%Cell{value: cell_value, next: next}, value) when cell_value == value,
       do: {1, next}
+
     defp remove_cell(%Cell{next: next} = cell, value) do
       case remove_cell(next, value) do
         {0, _} -> {0, cell}
@@ -174,6 +178,7 @@ defmodule DataStructuresBasics do
       new_cell = Cell.new(value)
       %__MODULE__{queue | front: new_cell, rear: new_cell, count: 1}
     end
+
     def enqueue(%__MODULE__{front: first, rear: _, count: n} = queue, value) do
       new_node = Cell.new(value)
       new_front = append_last(first, new_node)
@@ -184,6 +189,7 @@ defmodule DataStructuresBasics do
       new_first = Cell.put_next(first, new_node)
       new_first
     end
+
     defp append_last(%Cell{value: _, next: next} = first, new_node) do
       new_next = append_last(next, new_node)
       Cell.put_next(first, new_next)
@@ -195,9 +201,11 @@ defmodule DataStructuresBasics do
 
     @spec dequeue(queue :: t) :: {integer, t}
     def dequeue(%__MODULE__{front: nil} = queue), do: {@failure_value, queue}
+
     def dequeue(%__MODULE__{front: %Cell{value: value, next: nil}, count: n} = queue) do
       {value, %__MODULE__{queue | front: nil, rear: nil, count: n - 1}}
     end
+
     def dequeue(%__MODULE__{front: %Cell{value: value, next: rest}, count: n} = queue) do
       {value, %__MODULE__{queue | front: rest, count: n - 1}}
     end
