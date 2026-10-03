@@ -1,12 +1,15 @@
 defmodule DataStructuresBasicsTest do
   use ExUnit.Case
 
+  # Los cuatro tipos del contrato viven dentro del módulo del proyecto.
+  alias DataStructuresBasics.{Cell, LinkedList, Queue, Stack}
+
   # Casos de prueba de la especificación 06_Data_Structures_Basics.md: 15 casos
   # (Node 2, LinkedList 5, Stack 4, Queue 4) en cuatro escenarios.
   #
   # Elixir es inmutable: cada operación devuelve una instancia nueva, así que el
   # escenario continúa con lo que devuelve la operación precedente. Los valores
-  # son enteros positivos para no colisionar con el indicador natural (`nil`).
+  # son enteros positivos para no colisionar con el indicador de fallo (`-1`).
 
   @first_value 10
   @second_value 20
@@ -14,6 +17,9 @@ defmodule DataStructuresBasicsTest do
   @head_value 5
   @absent_value 99
   @reused_value 40
+  # Indicador de fallo del contrato: lo devuelven las operaciones de valor entero
+  # (`head_value`, `peek`, `pop`, `dequeue`) cuando la estructura está vacía.
+  @failure_value -1
 
   # Recorrido del enlace de nodos: `Cell.value/1` y `Cell.next/1` son el
   # `get_value` y el `get_next` del contrato. La lista se recorre desde su cabeza.
@@ -39,11 +45,11 @@ defmodule DataStructuresBasicsTest do
 
   test "LinkedList" do
     # Caso: estado vacío.
-    list = LinkedList.new(nil, nil, 0)
+    list = LinkedList.new()
     assert LinkedList.empty?(list) == true, "LinkedList should be empty after init"
     assert LinkedList.size(list) == 0, "LinkedList should start with size 0"
 
-    assert LinkedList.head_value(list) == nil,
+    assert LinkedList.head_value(list) == @failure_value,
            "LinkedList get_head should return the failure indicator on an empty list"
 
     # Caso: insertar por ambos extremos.
@@ -95,21 +101,23 @@ defmodule DataStructuresBasicsTest do
     assert LinkedList.size(list) == 0,
            "LinkedList should report size 0 after deleting every element"
 
-    assert LinkedList.head_value(list) == nil,
+    assert LinkedList.head_value(list) == @failure_value,
            "LinkedList get_head should return the failure indicator once empty"
   end
 
   test "Stack" do
     # Caso: estado vacío y extracción fallida.
-    stack = Stack.new(nil, 0)
+    stack = Stack.new()
     assert Stack.empty?(stack) == true, "Stack should be empty after init"
     assert Stack.size(stack) == 0, "Stack should start with size 0"
 
-    assert Stack.peek(stack) == nil,
+    assert Stack.peek(stack) == @failure_value,
            "Stack peek should return the failure indicator on an empty stack"
 
     {failed_pop, _stack} = Stack.pop(stack)
-    assert failed_pop == nil, "Stack pop should return the failure indicator on an empty stack"
+
+    assert failed_pop == @failure_value,
+           "Stack pop should return the failure indicator on an empty stack"
 
     # Caso: LIFO y peek no mutante.
     stack =
@@ -142,22 +150,22 @@ defmodule DataStructuresBasicsTest do
 
     # Caso: vacío tras extracción.
     {popped, stack} = Stack.pop(stack)
-    assert popped == nil, "Stack pop should keep failing once empty"
+    assert popped == @failure_value, "Stack pop should keep failing once empty"
     assert Stack.empty?(stack) == true, "Stack should stay empty after a failed pop"
   end
 
   test "Queue" do
     # Caso: estado vacío y extracción fallida.
-    queue = Queue.new(nil, nil, 0)
+    queue = Queue.new()
     assert Queue.empty?(queue) == true, "Queue should be empty after init"
     assert Queue.size(queue) == 0, "Queue should start with size 0"
 
-    assert Queue.peek(queue) == nil,
+    assert Queue.peek(queue) == @failure_value,
            "Queue peek should return the failure indicator on an empty queue"
 
     {failed_dequeue, _queue} = Queue.dequeue(queue)
 
-    assert failed_dequeue == nil,
+    assert failed_dequeue == @failure_value,
            "Queue dequeue should return the failure indicator on an empty queue"
 
     # Caso: FIFO y peek no mutante.
@@ -192,7 +200,7 @@ defmodule DataStructuresBasicsTest do
 
     # Caso: vacío tras extracción.
     {dequeued, queue} = Queue.dequeue(queue)
-    assert dequeued == nil, "Queue dequeue should keep failing once empty"
+    assert dequeued == @failure_value, "Queue dequeue should keep failing once empty"
     assert Queue.empty?(queue) == true, "Queue should stay empty after a failed dequeue"
   end
 end
