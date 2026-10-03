@@ -11,6 +11,7 @@ Los módulos de esta fase usan **indicadores de fallo compatibles con el lenguaj
 | Módulo | Especificación | Enfoque | Tests | Estado |
 |--------|---------------|---------|:-----:|:------:|
 | [`naive_sort/`](naive_sort/) | [05_Naive_Sort](https://yorche3.github.io/programming_languages/core/algorithms/05_Naive_Sort/) | `mix test` + `ExUnit` | 3 | ✅ |
+| [`data_structures_basics/`](data_structures_basics/) | [06_Data_Structures_Basics](https://yorche3.github.io/programming_languages/core/algorithms/06_Data_Structures_Basics/) | `mix test` + `ExUnit` | 4 | ✅ |
 
 ---
 
@@ -18,6 +19,14 @@ Los módulos de esta fase usan **indicadores de fallo compatibles con el lenguaj
 
 ```text
 algorithms/
+├── data_structures_basics/       # 06_Data_Structures_Basics
+│   ├── mix.exs
+│   ├── lib/
+│   │   └── data_structures_basics.ex
+│   ├── test/
+│   │   ├── test_helper.exs
+│   │   └── data_structures_basics_test.exs  # 4 tests (15 casos)
+│   └── README.md
 └── naive_sort/                   # 05_Naive_Sort
     ├── mix.exs
     ├── lib/
@@ -55,6 +64,10 @@ algorithms/
 ```bash
 # Naive Sort Tests
 cd naive_sort
+mix test
+
+# Data Structures Basics Tests
+cd ../data_structures_basics
 mix test
 ```
 
