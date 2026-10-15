@@ -54,7 +54,7 @@ hellouser/
 
 ```elixir
 name = IO.gets "Enter your name: "
-IO.puts "Hello " <> name <> "!"
+IO.puts "Hello, " <> name <> "!"
 ```
 
 | Elemento | Propósito |
