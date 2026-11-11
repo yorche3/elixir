@@ -12,6 +12,7 @@ Los módulos de esta fase usan **indicadores de fallo compatibles con el lenguaj
 |--------|---------------|---------|:-----:|:------:|
 | [`naive_sort/`](naive_sort/) | [05_Naive_Sort](https://yorche3.github.io/programming_languages/core/algorithms/05_Naive_Sort/) | `mix test` + `ExUnit` | 3 | ✅ |
 | [`data_structures_basics/`](data_structures_basics/) | [06_Data_Structures_Basics](https://yorche3.github.io/programming_languages/core/algorithms/06_Data_Structures_Basics/) | `mix test` + `ExUnit` | 4 | ✅ |
+| [`data_structures_advanced/`](data_structures_advanced/) | [07_Data_Structures_Advanced](https://yorche3.github.io/programming_languages/core/algorithms/07_Data_Structures_Advanced/) | `mix test` + `ExUnit` | 24 | ✅ |
 
 ---
 
@@ -19,6 +20,16 @@ Los módulos de esta fase usan **indicadores de fallo compatibles con el lenguaj
 
 ```text
 algorithms/
+├── data_structures_advanced/     # 07_Data_Structures_Advanced
+│   ├── mix.exs
+│   ├── lib/
+│   │   └── data_structures_advanced.ex
+│   ├── test/
+│   │   ├── test_helper.exs
+│   │   └── data_structures_advanced_test.exs # 24 tests
+│   ├── .formatter.exs
+│   ├── .gitignore
+│   └── README.md
 ├── data_structures_basics/       # 06_Data_Structures_Basics
 │   ├── mix.exs
 │   ├── lib/
@@ -68,6 +79,10 @@ mix test
 
 # Data Structures Basics Tests
 cd ../data_structures_basics
+mix test
+
+# Data Structures Advanced Tests
+cd ../data_structures_advanced
 mix test
 ```
 
