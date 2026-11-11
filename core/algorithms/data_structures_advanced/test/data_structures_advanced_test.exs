@@ -3,8 +3,8 @@ defmodule DataStructuresAdvancedTest do
 
   alias DataStructuresAdvanced.{BinaryTree, Graph, TreeNode}
 
-  # Casos de la especificación 07_Data_Structures_Advanced.md: 23 casos
-  # (TreeNode 6, BinaryTree 7, Graph 10); cada fila de la tabla es un test.
+  # Casos de la especificación 07_Data_Structures_Advanced.md: 24 casos
+  # (TreeNode 6, BinaryTree 7, Graph 11); cada fila de la tabla es un test.
   #
   # Elixir es inmutable: cada operación devuelve una instancia nueva y el
   # escenario continúa con lo que devuelve la operación precedente. La ausencia
@@ -31,10 +31,9 @@ defmodule DataStructuresAdvancedTest do
   @missing_label 99
   @other_missing_label 98
 
-  # Las operaciones del contrato devuelven `{éxito, estructura}`; si no es esa
-  # forma el paso falla por aserción y el escenario continúa con lo anterior.
+  # Las operaciones del contrato devuelven `{éxito, estructura}`; el paso
+  # desestructura el par y conserva la estructura aunque el éxito sea `false`.
   defp step({ok, next}, _previous), do: {ok, next}
-  defp step(other, previous), do: {other, previous}
 
   defp insert_all(tree, values) do
     Enum.reduce(values, tree, fn value, acc ->
@@ -412,6 +411,30 @@ defmodule DataStructuresAdvancedTest do
              "Graph should list 10 once as its own neighbour"
 
       assert_counts(graph, 1, 1)
+    end
+
+    test "Aislamiento del resultado de vecinos" do
+      graph =
+        Graph.new()
+        |> register_all([@label_a, @label_b, @label_c])
+        |> connect(@label_a, @label_b)
+
+      saved = Graph.get_neighbors(graph, @label_a)
+
+      assert saved == [@label_b],
+             "Graph should return [30] as the neighbours of 10"
+
+      # Elixir es inmutable: no hay copia mutable que alterar, así que la parte
+      # representable del caso es que el resultado guardado no cambia después.
+      updated = connect(graph, @label_a, @label_c)
+
+      assert saved == [@label_b],
+             "Graph should keep the saved result unchanged after a later edge"
+
+      assert Graph.get_neighbors(updated, @label_a) == [@label_b, @label_c],
+             "Graph should list [30, 50] for 10 after the later edge"
+
+      assert_counts(updated, 3, 2)
     end
   end
 end
